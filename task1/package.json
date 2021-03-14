@@ -1,7 +1,7 @@
 {
   "name": "nodejs",
   "version": "1.0.0",
-  "description": "nodejs mentoring programm",
+  "description": "nodejs mentoring program",
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node index.js"
