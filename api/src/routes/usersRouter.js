@@ -10,11 +10,11 @@ import {
 
 const usersRouter = express.Router();
 
-usersRouter.get('/', getUsers);
-usersRouter.get('/:id', getUserById);
-usersRouter.get('/suggestions', getUsersSuggestions);
 usersRouter.post('/', createUser);
-usersRouter.put('/', updateUser);
-usersRouter.delete('/', deleteUser);
+usersRouter.get('/', getUsers);
+usersRouter.get('/suggestions', getUsersSuggestions);
+usersRouter.get('/:id', getUserById);
+usersRouter.patch('/:id', updateUser);
+usersRouter.delete('/:id', deleteUser);
 
 export { usersRouter };

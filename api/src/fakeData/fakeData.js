@@ -1,37 +1,39 @@
-export const users = [
+import { nanoid } from 'nanoid';
+
+export const data = [
   {
-    id: '1',
+    id: nanoid(3),
+    isDeleted: false,
     login: 'Alex',
-    password: 'password',
-    age: 10,
-    isDeleted: false
+    password: nanoid(15),
+    age: 10
   },
   {
-    id: '2',
-    login: 'Alexander',
-    password: 'password',
-    age: 11,
-    isDeleted: false
+    id: nanoid(3),
+    isDeleted: false,
+    login: 'Marco',
+    password: nanoid(15),
+    age: 11
   },
   {
-    id: '3',
+    id: nanoid(3),
+    isDeleted: false,
     login: 'Alexa',
-    password: 'password',
-    age: 12,
-    isDeleted: false
+    password: nanoid(15),
+    age: 12
   },
   {
-    id: '4',
+    id: nanoid(3),
+    isDeleted: false,
     login: 'Paul',
-    password: 'password',
-    age: 13,
-    isDeleted: false
+    password: nanoid(15),
+    age: 13
   },
   {
-    id: '5',
+    id: nanoid(3),
+    isDeleted: true,
     login: 'Anna',
-    password: 'password',
-    age: 14,
-    isDeleted: true
+    password: nanoid(15),
+    age: 14
   }
 ];
