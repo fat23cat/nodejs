@@ -11,8 +11,8 @@ export function getUsers(req, res) {
 
 export function getUserById(req, res) {
   const userId = req.params.id;
-  const payload = users.find((user) => user.id === userId);
-  if (!payload?.isDeleted) {
+  const payload = filterActiveUsers(users).find((user) => user.id === userId);
+  if (payload) {
     res.status(200).send(JSON.stringify(payload));
   } else {
     res.status(404).send({
@@ -33,8 +33,8 @@ export function createUser(req, res) {
 
 export function updateUser(req, res) {
   const userId = req.params.id;
-  const payload = users.find((user) => user.id === userId);
-  if (!payload?.isDeleted) {
+  const payload = filterActiveUsers(users).find((user) => user.id === userId);
+  if (payload) {
     users = users.map((user) => {
       return user.id === userId ? { ...user, ...req.body } : user;
     });
@@ -48,8 +48,8 @@ export function updateUser(req, res) {
 
 export function deleteUser(req, res) {
   const userId = req.params.id;
-  const payload = users.find((user) => user.id === userId);
-  if (!payload?.isDeleted) {
+  const payload = filterActiveUsers(users).find((user) => user.id === userId);
+  if (payload) {
     users = users.map((user) => {
       return user.id === userId ? { ...user, isDeleted: true } : user;
     });
@@ -63,15 +63,14 @@ export function deleteUser(req, res) {
 
 export function getUsersSuggestions(req, res) {
   const { query = '', limit = 10 } = req.query;
-  const suggestions = users
-    .filter((user) => user.login.toLowerCase().startsWith(query.toLowerCase()))
-    .slice(0, limit);
-  const payload = suggestions.length ? filterActiveUsers(suggestions) : [];
+  const suggestions = filterActiveUsers(users).filter((user) =>
+    user.login.toLowerCase().startsWith(query.toLowerCase())
+  );
   res.status(200).send(
     JSON.stringify({
-      totalSize: payload.length,
+      totalSize: suggestions.length,
       limit,
-      suggestions: payload
+      suggestions: suggestions.slice(0, limit)
     })
   );
 }
