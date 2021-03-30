@@ -34,7 +34,6 @@ export function createUser(req, res) {
   }
   const newUser = {
     id: nanoid(3),
-    isDeleted: false,
     ...req.body
   };
   users.push(newUser);
