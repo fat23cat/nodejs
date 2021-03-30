@@ -41,6 +41,15 @@ export function createUser(req, res) {
 }
 
 export function updateUser(req, res) {
+  const validation = schema.validate(req.body);
+  if (validation.error) {
+    const message = createValidationErrorMessage(validation.error.details);
+    res.status(400).send(
+      JSON.stringify({
+        message
+      })
+    );
+  }
   const userId = req.params.id;
   const payload = filterActiveUsers(users).find((user) => user.id === userId);
   if (payload) {
