@@ -9,5 +9,5 @@ app.use('/users', usersRouter);
 
 app.listen(port, () => {
   const { stdout } = process;
-  stdout.write(`Server is running on port ${port}`);
+  stdout.write(`Server is running on port ${port}\n`);
 });

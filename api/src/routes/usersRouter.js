@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  getUsers,
+  getAllUsers,
   getUserById,
   createUser,
   updateUser,
@@ -11,7 +11,7 @@ import {
 const usersRouter = express.Router();
 
 usersRouter.post('/', createUser);
-usersRouter.get('/', getUsers);
+usersRouter.get('/', getAllUsers);
 usersRouter.get('/suggestions', getUsersSuggestions);
 usersRouter.get('/:id', getUserById);
 usersRouter.patch('/:id', updateUser);

@@ -1,10 +1,11 @@
 import { nanoid } from 'nanoid';
 import { data } from '../fakeData';
-import { filterActiveUsers } from '../helpers';
+import { filterActiveUsers, createValidationErrorMessage } from '../helpers';
+import { schema } from '../validation';
 
 let users = data;
 
-export function getUsers(req, res) {
+export function getAllUsers(req, res) {
   const payload = users?.length ? filterActiveUsers(users) : [];
   res.status(200).send(JSON.stringify(payload));
 }
@@ -22,6 +23,15 @@ export function getUserById(req, res) {
 }
 
 export function createUser(req, res) {
+  const validation = schema.validate(req.body);
+  if (validation.error) {
+    const message = createValidationErrorMessage(validation.error.details);
+    res.status(400).send(
+      JSON.stringify({
+        message
+      })
+    );
+  }
   const newUser = {
     id: nanoid(3),
     isDeleted: false,
