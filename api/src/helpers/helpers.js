@@ -2,7 +2,7 @@ export function filterActiveUsers(users) {
   return users.filter((user) => !user.isDeleted);
 }
 
-export function sortUsers(users) {
+export function sortUsersByLogin(users) {
   return users.sort((a, b) => {
     const loginA = a.login.toLowerCase();
     const loginB = b.login.toLowerCase();

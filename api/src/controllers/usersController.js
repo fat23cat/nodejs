@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import { data } from '../fakeData';
 import {
   filterActiveUsers,
-  sortUsers,
+  sortUsersByLogin,
   createValidationErrorMessage
 } from '../helpers';
 import { schema } from '../validation';
@@ -92,7 +92,7 @@ export function getUsersSuggestions(req, res) {
     JSON.stringify({
       totalSize: suggestions.length,
       limit,
-      suggestions: sortUsers(suggestions).slice(0, limit)
+      suggestions: sortUsersByLogin(suggestions).slice(0, limit)
     })
   );
 }
