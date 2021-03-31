@@ -1,6 +1,10 @@
 import { nanoid } from 'nanoid';
 import { data } from '../fakeData';
-import { filterActiveUsers, createValidationErrorMessage } from '../helpers';
+import {
+  filterActiveUsers,
+  sortUsers,
+  createValidationErrorMessage
+} from '../helpers';
 import { schema } from '../validation';
 
 let users = data;
@@ -88,7 +92,7 @@ export function getUsersSuggestions(req, res) {
     JSON.stringify({
       totalSize: suggestions.length,
       limit,
-      suggestions: suggestions.slice(0, limit)
+      suggestions: sortUsers(suggestions).slice(0, limit)
     })
   );
 }
