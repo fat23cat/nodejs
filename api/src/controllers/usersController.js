@@ -40,7 +40,7 @@ export function createUser(req, res) {
     ...req.body,
     id: nanoid(3)
   };
-  users.push(newUser);
+  users.push(newUser)
   res.status(200).send(JSON.stringify(newUser));
 }
 
