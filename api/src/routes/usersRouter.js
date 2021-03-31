@@ -3,8 +3,8 @@ import {
   getAllUsers,
   getUserById,
   createUser,
-  updateUser,
-  deleteUser,
+  updateUserById,
+  deleteUserById,
   getUsersSuggestions
 } from '../controllers';
 
@@ -14,7 +14,7 @@ usersRouter.post('/', createUser);
 usersRouter.get('/', getAllUsers);
 usersRouter.get('/suggestions', getUsersSuggestions);
 usersRouter.get('/:id', getUserById);
-usersRouter.patch('/:id', updateUser);
-usersRouter.delete('/:id', deleteUser);
+usersRouter.patch('/:id', updateUserById);
+usersRouter.delete('/:id', deleteUserById);
 
 export { usersRouter };

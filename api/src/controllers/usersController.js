@@ -37,14 +37,14 @@ export function createUser(req, res) {
     );
   }
   const newUser = {
-    id: nanoid(3),
-    ...req.body
+    ...req.body,
+    id: nanoid(3)
   };
   users.push(newUser);
   res.status(200).send(JSON.stringify(newUser));
 }
 
-export function updateUser(req, res) {
+export function updateUserById(req, res) {
   const validation = schema.validate(req.body);
   if (validation.error) {
     const message = createValidationErrorMessage(validation.error.details);
@@ -58,7 +58,7 @@ export function updateUser(req, res) {
   const payload = filterActiveUsers(users).find((user) => user.id === userId);
   if (payload) {
     users = users.map((user) => {
-      return user.id === userId ? { ...user, ...req.body } : user;
+      return user.id === userId ? { ...req.body, id: user.id } : user;
     });
     res.sendStatus(200);
   } else {
@@ -68,7 +68,7 @@ export function updateUser(req, res) {
   }
 }
 
-export function deleteUser(req, res) {
+export function deleteUserById(req, res) {
   const userId = req.params.id;
   const payload = filterActiveUsers(users).find((user) => user.id === userId);
   if (payload) {
