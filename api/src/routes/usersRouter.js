@@ -11,8 +11,8 @@ import {
 const usersRouter = express.Router();
 
 usersRouter.post('/', createUser);
+usersRouter.get('/', getUsersSuggestions);
 usersRouter.get('/', getAllUsers);
-usersRouter.get('/suggestions', getUsersSuggestions);
 usersRouter.get('/:id', getUserById);
 usersRouter.patch('/:id', updateUserById);
 usersRouter.delete('/:id', deleteUserById);
