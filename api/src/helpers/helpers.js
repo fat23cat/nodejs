@@ -16,6 +16,17 @@ export function sortUsersByLogin(users) {
   });
 }
 
+export function removeUsersPrivateData(users) {
+  return users.map((user) => {
+    const userCopy = {
+      ...user
+    };
+    delete userCopy.password;
+    delete userCopy.isDeleted;
+    return userCopy;
+  });
+}
+
 export function createValidationErrorMessage(errors) {
   return `These fields are missing: ${errors
     .map((err) => err.message)
