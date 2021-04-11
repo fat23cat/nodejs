@@ -10,12 +10,18 @@ import { schema } from '../validation';
 
 let users = data;
 
-export function getAllUsers(req, res, next) {
-  const { query, limit } = req.query;
-  if (query || limit) return next();
+export function getAllUsers(req, res) {
+  const { query = '', limit = 0 } = req.query;
   const activeUsers = filterActiveUsers(users);
-  const payload = removeUsersPrivateData(activeUsers);
-  res.status(200).send(JSON.stringify(payload));
+  const suggestions = removeUsersPrivateData(activeUsers).filter((user) =>
+    user.login.toLowerCase().startsWith(query.toLowerCase())
+  );
+  const actualLimit = limit ? limit : suggestions.length;
+  res.status(200).json({
+    totalSize: suggestions.length,
+    limit: actualLimit,
+    data: sortUsersByLogin(suggestions).slice(0, actualLimit)
+  });
 }
 
 export function getUserById(req, res) {
@@ -25,9 +31,9 @@ export function getUserById(req, res) {
     (user) => user.id === userId
   );
   if (payload) {
-    res.status(200).send(JSON.stringify(payload));
+    res.status(200).json(payload);
   } else {
-    res.status(404).send({
+    res.status(404).json({
       message: `User ID ${userId} does not exist`
     });
   }
@@ -37,18 +43,17 @@ export function createUser(req, res) {
   const validation = schema.validate(req.body);
   if (validation.error) {
     const message = createValidationErrorMessage(validation.error.details);
-    res.status(400).send(
-      JSON.stringify({
-        message
-      })
-    );
+    res.status(400).json({
+      message
+    });
   }
-  const newUser = {
+  let newUser = {
     ...req.body,
     id: nanoid(3)
   };
+  newUser = removeUsersPrivateData([newUser]);
   users.push(newUser);
-  res.status(200).send(JSON.stringify(newUser));
+  res.status(200).json(newUser);
 }
 
 export function partiallyUpdateUserById(req, res) {
@@ -59,11 +64,9 @@ export function updateUserById(req, res) {
   const validation = schema.validate(req.body);
   if (validation.error) {
     const message = createValidationErrorMessage(validation.error.details);
-    res.status(400).send(
-      JSON.stringify({
-        message
-      })
-    );
+    res.status(400).json({
+      message
+    });
   }
   updateUser(req, res);
 }
@@ -77,25 +80,10 @@ export function deleteUserById(req, res) {
     });
     res.sendStatus(200);
   } else {
-    res.status(404).send({
+    res.status(404).json({
       message: `User ID ${userId} does not exist`
     });
   }
-}
-
-export function getUsersSuggestions(req, res) {
-  const { query = '', limit = 10 } = req.query;
-  const activeUsers = filterActiveUsers(users);
-  const suggestions = removeUsersPrivateData(activeUsers).filter((user) =>
-    user.login.toLowerCase().startsWith(query.toLowerCase())
-  );
-  res.status(200).send(
-    JSON.stringify({
-      totalSize: suggestions.length,
-      limit,
-      suggestions: sortUsersByLogin(suggestions).slice(0, limit)
-    })
-  );
 }
 
 function updateUser(req, res) {
@@ -107,7 +95,7 @@ function updateUser(req, res) {
     });
     res.sendStatus(200);
   } else {
-    res.status(404).send({
+    res.status(404).json({
       message: `User ID ${userId} does not exist`
     });
   }
