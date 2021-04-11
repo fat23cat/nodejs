@@ -20,7 +20,7 @@ export function getAllUsers(req, res) {
   res.status(200).json({
     totalSize: suggestions.length,
     limit: actualLimit,
-    data: sortUsersByLogin(suggestions).slice(0, actualLimit)
+    users: sortUsersByLogin(suggestions).slice(0, actualLimit)
   });
 }
 
