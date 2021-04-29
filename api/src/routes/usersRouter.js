@@ -6,11 +6,12 @@ import {
   updateUserById,
   deleteUserById
 } from '../controllers';
+import { validation } from '../middlewares';
 
 export const usersRouter = express.Router();
 
-usersRouter.post('/', createUser);
+usersRouter.post('/', validation, createUser);
 usersRouter.get('/', getAllUsers);
 usersRouter.get('/:userId', getUserById);
-usersRouter.put('/:userId', updateUserById);
+usersRouter.put('/:userId', validation, updateUserById);
 usersRouter.delete('/:userId', deleteUserById);

@@ -1,10 +1,9 @@
-import { createValidationErrorMessage, generateUserId } from '../helpers';
-import { schema } from '../validation';
+import { generateUserId } from '../helpers';
 import { UsersService } from '../services';
 
 const usersService = new UsersService();
 
-export async function getAllUsers(req, res) {
+export const getAllUsers = async (req, res) => {
   const { query, limit } = req.query;
   let result;
   if (query) {
@@ -18,9 +17,9 @@ export async function getAllUsers(req, res) {
     limit: actualLimit,
     users: result.slice(0, actualLimit)
   });
-}
+};
 
-export async function getUserById(req, res) {
+export const getUserById = async (req, res) => {
   const { userId } = req.params;
   const result = await usersService.getUserById(userId);
   if (result[0]) {
@@ -30,16 +29,9 @@ export async function getUserById(req, res) {
       message: `User id ${userId} does not exist`
     });
   }
-}
+};
 
-export async function createUser(req, res) {
-  const validation = schema.validate(req.body);
-  if (validation.error) {
-    const message = createValidationErrorMessage(validation.error.details);
-    return res.status(400).json({
-      message
-    });
-  }
+export const createUser = async (req, res) => {
   const newUser = {
     ...req.body,
     id: generateUserId()
@@ -47,15 +39,8 @@ export async function createUser(req, res) {
   const result = await usersService.createUser(newUser);
   const user = await usersService.getUserById(result.id);
   res.status(200).json(user[0]);
-}
-export async function updateUserById(req, res) {
-  const validation = schema.validate(req.body);
-  if (validation.error) {
-    const message = createValidationErrorMessage(validation.error.details);
-    return res.status(400).json({
-      message
-    });
-  }
+};
+export const updateUserById = async (req, res) => {
   const { userId } = req.params;
   let user = await usersService.getUserById(userId);
   if (user[0]) {
@@ -73,9 +58,9 @@ export async function updateUserById(req, res) {
       message: `User id ${userId} does not exist`
     });
   }
-}
+};
 
-export async function deleteUserById(req, res) {
+export const deleteUserById = async (req, res) => {
   const { userId } = req.params;
   const user = await usersService.getUserById(userId);
   if (user[0]) {
@@ -86,4 +71,4 @@ export async function deleteUserById(req, res) {
       message: `User id ${userId} does not exist`
     });
   }
-}
+};
