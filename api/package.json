@@ -6,8 +6,7 @@
   "scripts": {
     "server": "nodemon --exec babel-node ./src/app.js",
     "lint": "npx eslint ./src --fix",
-    "prettier": "npx prettier ./src --write",
-    "create": "node ./src/db/create.js"
+    "prettier": "npx prettier ./src --write"
   },
   "author": "",
   "license": "ISC",
