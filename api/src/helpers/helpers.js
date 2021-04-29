@@ -1,34 +1,7 @@
-export function filterActiveUsers(users) {
-  return users.filter((user) => !user.isDeleted);
-}
+import { customAlphabet } from 'nanoid';
 
-export function sortUsersByLogin(users) {
-  return users.sort((a, b) => {
-    const loginA = a.login.toLowerCase();
-    const loginB = b.login.toLowerCase();
-    if (loginA < loginB) {
-      return -1;
-    }
-    if (loginA > loginB) {
-      return 1;
-    }
-    return 0;
-  });
-}
-
-export function removeUsersPrivateData(users) {
-  return users.map((user) => {
-    const userCopy = {
-      ...user
-    };
-    delete userCopy.password;
-    delete userCopy.isDeleted;
-    return userCopy;
-  });
-}
+export const generateUserId = customAlphabet('1234567890abcdef', 10);
 
 export function createValidationErrorMessage(errors) {
-  return `These fields are missing: ${errors
-    .map((err) => err.message)
-    .join(', ')}`;
+  return `Validation failed: ${errors.map((err) => err.message).join(', ')}`;
 }

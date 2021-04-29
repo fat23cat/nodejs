@@ -4,17 +4,13 @@ import {
   getUserById,
   createUser,
   updateUserById,
-  deleteUserById,
-  partiallyUpdateUserById
+  deleteUserById
 } from '../controllers';
 
-const usersRouter = express.Router();
+export const usersRouter = express.Router();
 
 usersRouter.post('/', createUser);
 usersRouter.get('/', getAllUsers);
-usersRouter.get('/:id', getUserById);
-usersRouter.put('/:id', updateUserById);
-usersRouter.patch('/:id', partiallyUpdateUserById);
-usersRouter.delete('/:id', deleteUserById);
-
-export { usersRouter };
+usersRouter.get('/:userId', getUserById);
+usersRouter.put('/:userId', updateUserById);
+usersRouter.delete('/:userId', deleteUserById);
