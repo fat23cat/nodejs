@@ -1,4 +1,5 @@
 const { customAlphabet } = require('nanoid');
+const bcrypt = require('bcrypt');
 
 const generateUserId = customAlphabet('1234567890abcdef', 10);
 const generateUserPassword = customAlphabet('1234567890abcdef', 15);
@@ -10,7 +11,7 @@ module.exports = {
         id: generateUserId(),
         isDeleted: false,
         login: 'Alex',
-        password: generateUserPassword(),
+        password: await bcrypt.hash(generateUserPassword(), 10),
         age: 10,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -19,7 +20,7 @@ module.exports = {
         id: generateUserId(),
         isDeleted: false,
         login: 'Marco',
-        password: generateUserPassword(),
+        password: await bcrypt.hash(generateUserPassword(), 10),
         age: 11,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -28,7 +29,7 @@ module.exports = {
         id: generateUserId(),
         isDeleted: false,
         login: 'Alexa',
-        password: generateUserPassword(),
+        password: await bcrypt.hash(generateUserPassword(), 10),
         age: 12,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -37,7 +38,7 @@ module.exports = {
         id: generateUserId(),
         isDeleted: false,
         login: 'Paul',
-        password: generateUserPassword(),
+        password: await bcrypt.hash(generateUserPassword(), 10),
         age: 13,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -46,7 +47,7 @@ module.exports = {
         id: generateUserId(),
         isDeleted: true,
         login: 'Anna',
-        password: generateUserPassword(),
+        password: await bcrypt.hash(generateUserPassword(), 10),
         age: 14,
         createdAt: new Date(),
         updatedAt: new Date(),
