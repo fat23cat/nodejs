@@ -1,6 +1,6 @@
-import { generateUserId } from '../helpers';
-import { UsersService } from '../services';
+import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
+import { UsersService } from '../services';
 
 const usersService = new UsersService();
 
@@ -35,7 +35,7 @@ export const getUserById = async (req, res) => {
 export const createUser = async (req, res) => {
   const newUser = {
     ...req.body,
-    id: generateUserId()
+    id: uuidv4()
   };
   const result = await usersService.createUser(newUser);
   const user = await usersService.getUserById(result.id);

@@ -1,8 +1,22 @@
-import { schema } from '../validation';
+import { userSchema, groupSchema, addUserIdsSchema } from '../validation';
 import { createValidationErrorMessage } from '../helpers';
 
-export const validation = (req, res, next) => {
-  const validationResult = schema.validate(req.body);
+export const userValidation = (req, res, next) => {
+  const validationResult = userSchema.validate(req.body);
+  validate(validationResult, res, next);
+};
+
+export const groupValidation = (req, res, next) => {
+  const validationResult = groupSchema.validate(req.body);
+  validate(validationResult, res, next);
+};
+
+export const userIdsValidation = (req, res, next) => {
+  const validationResult = addUserIdsSchema.validate(req.body);
+  validate(validationResult, res, next);
+};
+
+const validate = (validationResult, res, next) => {
   if (validationResult.error) {
     const message = createValidationErrorMessage(
       validationResult.error.details

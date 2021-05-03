@@ -205,7 +205,6 @@
     "object-curly-spacing": [2, "always"],
     "one-var": [2, "never"],
     "padded-blocks": [2, "never"],
-    "quotes": [1, "single", "avoid-escape"],
     "semi-spacing": [
       2,
       {
