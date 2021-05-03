@@ -1,5 +1,6 @@
 import { generateUserId } from '../helpers';
 import { UsersService } from '../services';
+import bcrypt from 'bcrypt';
 
 const usersService = new UsersService();
 
@@ -47,7 +48,7 @@ export const updateUserById = async (req, res) => {
     user = {
       ...user,
       login: req.body.login,
-      password: req.body.password,
+      password: await bcrypt.hash(req.body.password, 10),
       age: req.body.age,
       isDeleted: false
     };
