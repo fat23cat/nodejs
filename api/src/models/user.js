@@ -1,41 +1,51 @@
-import Sequelize from 'sequelize';
-import bcrypt from 'bcrypt';
-import { sequelize } from '../../data-access';
+const bcrypt = require('bcrypt');
 
-export const User = sequelize.define(
-  'users',
-  {
-    id: {
-      type: Sequelize.STRING,
-      primaryKey: true
-    },
-    login: Sequelize.STRING,
-    password: Sequelize.STRING,
-    age: Sequelize.INTEGER,
-    isDeleted: Sequelize.BOOLEAN
-  },
-  {
-    defaultScope: {
-      attributes: {
-        exclude: [
-          'password',
-          'isDeleted',
-          'createdAt',
-          'updatedAt',
-          'deletedAt'
-        ]
-      }
-    },
-    hooks: {
-      beforeCreate: async (user) => {
-        user.password = await bcrypt.hash(user.password, 10);
-        user.isDeleted = false;
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define(
+    'user',
+    {
+      id: {
+        type: DataTypes.STRING,
+        primaryKey: true
       },
-      afterDestroy: async (user) => {
-        user.isDeleted = true;
-        await user.save();
-      }
+      login: DataTypes.STRING,
+      password: DataTypes.STRING,
+      age: DataTypes.INTEGER,
+      isDeleted: DataTypes.BOOLEAN
     },
-    paranoid: true
-  }
-);
+    {
+      defaultScope: {
+        attributes: {
+          exclude: [
+            'password',
+            'isDeleted',
+            'createdAt',
+            'updatedAt',
+            'deletedAt'
+          ]
+        }
+      },
+      hooks: {
+        beforeCreate: async (user) => {
+          user.password = await bcrypt.hash(user.password, 10);
+          user.isDeleted = false;
+        },
+        afterDestroy: async (user) => {
+          user.isDeleted = true;
+          await user.save();
+        }
+      },
+      paranoid: true
+    }
+  );
+
+  User.associate = (models) => {
+    User.belongsToMany(models.group, {
+      through: 'users_groups',
+      foreignKey: 'user_id',
+      onDelete: 'CASCADE'
+    });
+  };
+
+  return User;
+};

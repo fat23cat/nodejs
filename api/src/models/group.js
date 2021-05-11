@@ -1,23 +1,32 @@
-import Sequelize from 'sequelize';
-import { sequelize } from '../../data-access';
-
-export const Group = sequelize.define(
-  'groups',
-  {
-    id: {
-      type: Sequelize.STRING,
-      primaryKey: true
+module.exports = (sequelize, DataTypes) => {
+  const Group = sequelize.define(
+    'group',
+    {
+      id: {
+        type: DataTypes.STRING,
+        primaryKey: true
+      },
+      name: DataTypes.STRING,
+      permissions: DataTypes.ARRAY(
+        DataTypes.ENUM('READ', 'WRITE', 'DELETE', 'SHARE', 'UPLOAD_FILES')
+      )
     },
-    name: Sequelize.STRING,
-    permissions: Sequelize.ARRAY(
-      Sequelize.ENUM('READ', 'WRITE', 'DELETE', 'SHARE', 'UPLOAD_FILES')
-    )
-  },
-  {
-    defaultScope: {
-      attributes: {
-        exclude: ['createdAt', 'updatedAt']
+    {
+      defaultScope: {
+        attributes: {
+          exclude: ['createdAt', 'updatedAt']
+        }
       }
     }
-  }
-);
+  );
+
+  Group.associate = (models) => {
+    Group.belongsToMany(models.user, {
+      through: 'users_groups',
+      foreignKey: 'group_id',
+      onDelete: 'CASCADE'
+    });
+  };
+
+  return Group;
+};

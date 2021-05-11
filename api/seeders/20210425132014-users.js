@@ -44,13 +44,12 @@ module.exports = {
       },
       {
         id: 'f90c6b08-ea8c-4be4-b052-c6cfca92dd04',
-        isDeleted: true,
+        isDeleted: false,
         login: 'Anna',
         password: await bcrypt.hash(generateUserPassword(), 10),
         age: 14,
         createdAt: new Date(),
-        updatedAt: new Date(),
-        deletedAt: new Date()
+        updatedAt: new Date()
       }
     ]);
   },

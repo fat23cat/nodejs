@@ -1,4 +1,6 @@
-import { Group } from '../models';
+import db from '../models';
+
+const Group = db.group;
 
 export class GroupsService {
   async getAllGroups() {
@@ -8,7 +10,7 @@ export class GroupsService {
   }
 
   async getGroupById(id) {
-    return await Group.findAll({
+    return await Group.findOne({
       where: {
         id
       }

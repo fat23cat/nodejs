@@ -1,12 +1,15 @@
 import Sequelize from 'sequelize';
-import { User } from '../models';
+import db from '../models';
+
+const User = db.user;
 
 export class UsersService {
   async getAllUsers() {
     return await User.findAll({
       where: {
         isDeleted: false
-      }
+      },
+      include: db.group
     });
   }
 
@@ -22,7 +25,7 @@ export class UsersService {
   }
 
   async getUserById(id) {
-    return await User.findAll({
+    return await User.findOne({
       where: {
         isDeleted: false,
         id

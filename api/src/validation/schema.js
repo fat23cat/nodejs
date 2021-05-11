@@ -13,8 +13,6 @@ const permissions = Joi.array()
   )
   .required();
 
-const userIds = Joi.array().items(Joi.string().required()).required();
-
 export const userSchema = Joi.object({
   login,
   password,
@@ -24,8 +22,4 @@ export const userSchema = Joi.object({
 export const groupSchema = Joi.object({
   name,
   permissions
-}).options({ abortEarly: false });
-
-export const addUserIdsSchema = Joi.object({
-  userIds
 }).options({ abortEarly: false });

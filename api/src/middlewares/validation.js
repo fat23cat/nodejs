@@ -1,4 +1,4 @@
-import { userSchema, groupSchema, addUserIdsSchema } from '../validation';
+import { userSchema, groupSchema } from '../validation';
 import { createValidationErrorMessage } from '../helpers';
 
 export const userValidation = (req, res, next) => {
@@ -8,11 +8,6 @@ export const userValidation = (req, res, next) => {
 
 export const groupValidation = (req, res, next) => {
   const validationResult = groupSchema.validate(req.body);
-  validate(validationResult, res, next);
-};
-
-export const userIdsValidation = (req, res, next) => {
-  const validationResult = addUserIdsSchema.validate(req.body);
   validate(validationResult, res, next);
 };
 

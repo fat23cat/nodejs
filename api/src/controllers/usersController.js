@@ -22,9 +22,9 @@ export const getAllUsers = async (req, res) => {
 
 export const getUserById = async (req, res) => {
   const { userId } = req.params;
-  const result = await usersService.getUserById(userId);
-  if (result[0]) {
-    res.status(200).json(result[0]);
+  const user = await usersService.getUserById(userId);
+  if (user) {
+    res.status(200).json(user);
   } else {
     res.status(404).json({
       message: `User id ${userId} does not exist`
@@ -39,12 +39,12 @@ export const createUser = async (req, res) => {
   };
   const result = await usersService.createUser(newUser);
   const user = await usersService.getUserById(result.id);
-  res.status(200).json(user[0]);
+  res.status(200).json(user);
 };
 export const updateUserById = async (req, res) => {
   const { userId } = req.params;
   let user = await usersService.getUserById(userId);
-  if (user[0]) {
+  if (user) {
     user = {
       ...user,
       login: req.body.login,
@@ -64,12 +64,14 @@ export const updateUserById = async (req, res) => {
 export const deleteUserById = async (req, res) => {
   const { userId } = req.params;
   const user = await usersService.getUserById(userId);
-  if (user[0]) {
-    await usersService.deleteUser(userId);
-    res.sendStatus(200);
-  } else {
-    res.status(404).json({
+  if (!user) {
+    return res.status(404).json({
       message: `User id ${userId} does not exist`
     });
   }
+  const usersGroups = await user.getGroups();
+  const usersGroupsIds = usersGroups.map(({ id: groupId }) => groupId);
+  await user.removeGroups(usersGroupsIds);
+  await usersService.deleteUser(userId);
+  res.sendStatus(200);
 };

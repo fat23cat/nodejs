@@ -1,6 +1,6 @@
 import express from 'express';
 import { usersRouter, groupsRouter } from './routes';
-import { sequelize } from '../data-access';
+import db from './models';
 
 const { stdout } = process;
 
@@ -15,7 +15,7 @@ app.listen(port, () => {
   stdout.write(`Server is running on port ${port}\n`);
 });
 
-sequelize
+db.sequelize
   .authenticate()
   .then(() => {
     stdout.write('Database connection has been established successfully.\n');

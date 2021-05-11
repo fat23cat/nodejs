@@ -12,9 +12,9 @@ export const getAllGroups = async (req, res) => {
 
 export const getGroupById = async (req, res) => {
   const { groupId } = req.params;
-  const result = await groupsService.getGroupById(groupId);
-  if (result[0]) {
-    res.status(200).json(result[0]);
+  const group = await groupsService.getGroupById(groupId);
+  if (group) {
+    res.status(200).json(group);
   } else {
     res.status(404).json({
       message: `Group id ${groupId} does not exist`
@@ -29,13 +29,13 @@ export const createGroup = async (req, res) => {
   };
   const result = await groupsService.createGroup(newGroup);
   const group = await groupsService.getGroupById(result.id);
-  res.status(200).json(group[0]);
+  res.status(200).json(group);
 };
 
 export const updateGroupById = async (req, res) => {
   const { groupId } = req.params;
   let group = await groupsService.getGroupById(groupId);
-  if (group[0]) {
+  if (group) {
     group = {
       ...group,
       name: req.body.name,
@@ -53,20 +53,14 @@ export const updateGroupById = async (req, res) => {
 export const deleteGroupById = async (req, res) => {
   const { groupId } = req.params;
   const group = await groupsService.getGroupById(groupId);
-  if (group[0]) {
-    await groupsService.deleteGroup(groupId);
-    res.sendStatus(200);
-  } else {
-    res.status(404).json({
+  if (!group) {
+    return res.status(404).json({
       message: `Group id ${groupId} does not exist`
     });
   }
-};
-
-export const addUsersToGroup = async (req, res) => {
-  const { groupId } = req.params;
-  res.status(200).json({
-    groupId,
-    userIds: req.body.userIds
-  });
+  const users = await group.getUsers();
+  const usersIds = users.map(({ id: userId }) => userId);
+  await group.removeUsers(usersIds);
+  await groupsService.deleteGroup(groupId);
+  res.sendStatus(200);
 };
