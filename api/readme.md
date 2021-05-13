@@ -2,7 +2,7 @@
 
 ## Install dependencies
 
-run `npm i`
+Run `npm ci`
 
 ## Data
 
