@@ -3,8 +3,7 @@ module.exports = {
     return queryInterface.createTable('groups', {
       id: {
         type: Sequelize.STRING,
-        primaryKey: true,
-        allowNull: false
+        primaryKey: true
       },
       name: Sequelize.STRING,
       permissions: Sequelize.ARRAY(

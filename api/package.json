@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "server": "nodemon --exec babel-node ./src/app.js",
+    "migrate": "sequelize db:migrate",
+    "migrate:undo": "sequelize db:migrate:undo:all",
+    "seed": "sequelize db:seed:all",
+    "seed:undo": "sequelize db:seed:undo:all",
     "lint": "npx eslint ./src --fix",
     "prettier": "npx prettier ./src --write"
   },

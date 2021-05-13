@@ -1,24 +1,12 @@
-module.exports = (sequelize, DataTypes) => {
-  const UserGroup = sequelize.define('user_group', {
-    id: {
-      type: DataTypes.STRING,
-      primaryKey: true
-    },
-    user_id: {
-      type: DataTypes.STRING,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
-    },
-    group_id: {
-      type: DataTypes.STRING,
-      references: {
-        model: 'groups',
-        key: 'id'
-      }
-    }
-  });
-
-  return UserGroup;
-};
+import Sequelize from 'sequelize';
+import { sequelize } from '../../data-access';
+export const UserGroup = sequelize.define('user_group', {
+  id: {
+    type: Sequelize.STRING,
+    primaryKey: true
+  },
+  user_id: Sequelize.STRING,
+  group_id: Sequelize.STRING,
+  createdAt: Sequelize.DATE,
+  updatedAt: Sequelize.DATE
+});

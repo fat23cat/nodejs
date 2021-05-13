@@ -1,7 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { GroupsService } from '../services';
-
-const groupsService = new GroupsService();
+import { groupsService } from '../services';
 
 export const getAllGroups = async (req, res) => {
   const result = await groupsService.getAllGroups();
@@ -53,14 +51,12 @@ export const updateGroupById = async (req, res) => {
 export const deleteGroupById = async (req, res) => {
   const { groupId } = req.params;
   const group = await groupsService.getGroupById(groupId);
-  if (!group) {
-    return res.status(404).json({
+  if (group) {
+    await groupsService.deleteGroup(groupId);
+    res.sendStatus(200);
+  } else {
+    res.status(404).json({
       message: `Group id ${groupId} does not exist`
     });
   }
-  const users = await group.getUsers();
-  const usersIds = users.map(({ id: userId }) => userId);
-  await group.removeUsers(usersIds);
-  await groupsService.deleteGroup(groupId);
-  res.sendStatus(200);
 };

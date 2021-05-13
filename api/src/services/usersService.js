@@ -1,15 +1,12 @@
 import Sequelize from 'sequelize';
-import db from '../models';
+import { User } from '../models/index.js';
 
-const User = db.user;
-
-export class UsersService {
+class UsersService {
   async getAllUsers() {
     return await User.findAll({
       where: {
         isDeleted: false
-      },
-      include: db.group
+      }
     });
   }
 
@@ -54,3 +51,5 @@ export class UsersService {
     });
   }
 }
+
+export const usersService = new UsersService();

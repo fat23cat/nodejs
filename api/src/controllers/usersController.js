@@ -1,8 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
-import { UsersService } from '../services';
-
-const usersService = new UsersService();
+import { usersService } from '../services';
 
 export const getAllUsers = async (req, res) => {
   const { query, limit } = req.query;
@@ -64,14 +62,12 @@ export const updateUserById = async (req, res) => {
 export const deleteUserById = async (req, res) => {
   const { userId } = req.params;
   const user = await usersService.getUserById(userId);
-  if (!user) {
-    return res.status(404).json({
+  if (user) {
+    await usersService.deleteUser(userId);
+    res.sendStatus(200);
+  } else {
+    res.status(404).json({
       message: `User id ${userId} does not exist`
     });
   }
-  const usersGroups = await user.getGroups();
-  const usersGroupsIds = usersGroups.map(({ id: groupId }) => groupId);
-  await user.removeGroups(usersGroupsIds);
-  await usersService.deleteUser(userId);
-  res.sendStatus(200);
 };

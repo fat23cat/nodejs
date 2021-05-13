@@ -1,51 +1,45 @@
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
+import Sequelize from 'sequelize';
+import { sequelize } from '../../data-access';
+import { Group } from './group';
+import { UserGroup } from './userGroup';
 
-module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    'user',
-    {
-      id: {
-        type: DataTypes.STRING,
-        primaryKey: true
-      },
-      login: DataTypes.STRING,
-      password: DataTypes.STRING,
-      age: DataTypes.INTEGER,
-      isDeleted: DataTypes.BOOLEAN
+export const User = sequelize.define(
+  'user',
+  {
+    id: {
+      type: Sequelize.STRING,
+      primaryKey: true
     },
-    {
-      defaultScope: {
-        attributes: {
-          exclude: [
-            'password',
-            'isDeleted',
-            'createdAt',
-            'updatedAt',
-            'deletedAt'
-          ]
-        }
-      },
-      hooks: {
-        beforeCreate: async (user) => {
-          user.password = await bcrypt.hash(user.password, 10);
-          user.isDeleted = false;
-        },
-        afterDestroy: async (user) => {
-          user.isDeleted = true;
-          await user.save();
-        }
-      },
-      paranoid: true
+    login: Sequelize.STRING,
+    password: Sequelize.STRING,
+    age: Sequelize.INTEGER,
+    isDeleted: Sequelize.BOOLEAN
+  },
+  {
+    defaultScope: {
+      attributes: {
+        exclude: [
+          'password',
+          'isDeleted',
+          'createdAt',
+          'updatedAt',
+          'deletedAt'
+        ]
+      }
+    },
+    hooks: {
+      beforeCreate: async (user) => {
+        user.password = await bcrypt.hash(user.password, 10);
+        user.isDeleted = false;
+      }
+    },
+    associate: () => {
+      User.belongsToMany(Group, {
+        through: UserGroup,
+        onDelete: 'cascade',
+        hooks: true
+      });
     }
-  );
-
-  User.associate = (models) => {
-    User.belongsToMany(models.group, {
-      through: 'users_groups',
-      foreignKey: 'user_id',
-      onDelete: 'CASCADE'
-    });
-  };
-
-  return User;
-};
+  }
+);

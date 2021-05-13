@@ -1,8 +1,6 @@
-import db from '../models';
+import { Group } from '../models/index.js';
 
-const Group = db.group;
-
-export class GroupsService {
+class GroupsService {
   async getAllGroups() {
     return await Group.findAll({
       order: [['name', 'ASC']]
@@ -37,3 +35,5 @@ export class GroupsService {
     });
   }
 }
+
+export const groupsService = new GroupsService();
