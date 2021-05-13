@@ -6,9 +6,9 @@ run `npm i`
 
 ## Data
 
-Install Postgres server and pgAdmin 4
-Run `npm run migrate` and `npm run seed` to create tables and fill them
-Run `npm run seed:undo` and `npm run migrate:undo` to remove data and tables
+- Install Postgres server and pgAdmin 4
+- Run `npm run migrate` and `npm run seed` to create tables and fill them
+- Run `npm run seed:undo` and `npm run migrate:undo` to remove data and tables
 
 ## Run server app
 
