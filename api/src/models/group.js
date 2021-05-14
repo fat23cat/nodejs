@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../../data-access';
 import { User } from './user';
-import { UserGroup } from './userGroup';
+import { UsersGroups } from './usersGroups';
 
 export const Group = sequelize.define(
   'group',
@@ -23,7 +23,7 @@ export const Group = sequelize.define(
     },
     associate: () => {
       Group.belongsToMany(User, {
-        through: UserGroup,
+        through: UsersGroups,
         onDelete: 'cascade',
         hooks: true
       });

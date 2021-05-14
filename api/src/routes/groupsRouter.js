@@ -4,9 +4,10 @@ import {
   getGroupById,
   createGroup,
   updateGroupById,
-  deleteGroupById
+  deleteGroupById,
+  addUsersToGroup
 } from '../controllers';
-import { groupValidation } from '../middlewares';
+import { groupValidation, usersIdsValidation } from '../middlewares';
 
 export const groupsRouter = express.Router();
 
@@ -15,3 +16,4 @@ groupsRouter.get('/', getAllGroups);
 groupsRouter.get('/:groupId', getGroupById);
 groupsRouter.put('/:groupId', groupValidation, updateGroupById);
 groupsRouter.delete('/:groupId', deleteGroupById);
+groupsRouter.post('/:groupId/users', usersIdsValidation, addUsersToGroup);

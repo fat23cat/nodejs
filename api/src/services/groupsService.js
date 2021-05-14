@@ -1,4 +1,6 @@
-import { Group } from '../models/index.js';
+import { sequelize } from '../../data-access';
+import { Group, UsersGroups } from '../models';
+import { v4 as uuidv4 } from 'uuid';
 
 class GroupsService {
   async getAllGroups() {
@@ -32,6 +34,23 @@ class GroupsService {
       where: {
         id
       }
+    });
+  }
+
+  async addUsersToGroup(group_id, usersIds) {
+    return await sequelize.transaction(async (transaction) => {
+      for (const user_id of usersIds) {
+        await UsersGroups.create(
+          { id: uuidv4(), user_id, group_id },
+          { transaction }
+        );
+      }
+      // return usersIds.map(async (user_id) => {
+      //   return await UserGroup.create(
+      //     { id: uuidv4(), user_id, group_id },
+      //     { transaction }
+      //   );
+      // });
     });
   }
 }

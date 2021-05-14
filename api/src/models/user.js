@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import Sequelize from 'sequelize';
 import { sequelize } from '../../data-access';
 import { Group } from './group';
-import { UserGroup } from './userGroup';
+import { UsersGroups } from './usersGroups';
 
 export const User = sequelize.define(
   'user',
@@ -36,7 +36,7 @@ export const User = sequelize.define(
     },
     associate: () => {
       User.belongsToMany(Group, {
-        through: UserGroup,
+        through: UsersGroups,
         onDelete: 'cascade',
         hooks: true
       });

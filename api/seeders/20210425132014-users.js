@@ -50,6 +50,15 @@ module.exports = {
         age: 14,
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        id: 'ce482222-d5d6-4b87-a9fa-6a20a550c594',
+        isDeleted: false,
+        login: 'Matthew',
+        password: await bcrypt.hash(generateUserPassword(), 10),
+        age: 99,
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ]);
   },

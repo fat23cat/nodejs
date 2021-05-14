@@ -60,3 +60,18 @@ export const deleteGroupById = async (req, res) => {
     });
   }
 };
+
+export const addUsersToGroup = async (req, res) => {
+  const { groupId } = req.params;
+  const { usersIds } = req.body;
+  await groupsService
+    .addUsersToGroup(groupId, usersIds)
+    .then(() => {
+      return res.sendStatus(200);
+    })
+    .catch(() => {
+      return res.status(500).json({
+        message: 'Server error'
+      });
+    });
+};

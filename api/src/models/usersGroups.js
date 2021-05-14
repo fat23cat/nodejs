@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../../data-access';
-export const UserGroup = sequelize.define('user_group', {
+export const UsersGroups = sequelize.define('users_groups', {
   id: {
     type: Sequelize.STRING,
     primaryKey: true
