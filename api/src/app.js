@@ -1,6 +1,7 @@
 import express from 'express';
 import { usersRouter, groupsRouter } from './routes';
 import { sequelize } from '../data-access';
+import { requestLogger } from './middlewares';
 
 const { stdout } = process;
 
@@ -8,6 +9,7 @@ const app = express();
 const port = 8080;
 
 app.use(express.json());
+app.use(requestLogger);
 app.use('/users', usersRouter);
 app.use('/groups', groupsRouter);
 
