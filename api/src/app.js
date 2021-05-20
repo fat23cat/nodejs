@@ -2,6 +2,10 @@ import express from 'express';
 import { usersRouter, groupsRouter } from './routes';
 import { sequelize } from '../data-access';
 import { requestLogger, unhandledErrorLogger } from './middlewares';
+import {
+  uncaughtExceptionHandler,
+  unhandledPromiseRejectionHandler
+} from './helpers';
 
 const { stdout } = process;
 
@@ -17,6 +21,8 @@ app.use('/groups', groupsRouter);
 app.use(unhandledErrorLogger);
 
 app.listen(port, () => {
+  uncaughtExceptionHandler();
+  unhandledPromiseRejectionHandler();
   stdout.write(`Server is running on port ${port}\n`);
 });
 
