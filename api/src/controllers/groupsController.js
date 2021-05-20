@@ -4,7 +4,7 @@ import { controllerLogger } from '../helpers';
 
 const CONTROLLER_NAME = 'GroupsController';
 
-export const getAllGroups = async (req, res, next) => {
+export const getAllGroups = async (req, res) => {
   try {
     const result = await groupsService.getAllGroups();
     res.status(200).json({
@@ -12,11 +12,10 @@ export const getAllGroups = async (req, res, next) => {
     });
   } catch (err) {
     controllerLogger(CONTROLLER_NAME, 'getAllGroups', req, err);
-    return next(err);
   }
 };
 
-export const getGroupById = async (req, res, next) => {
+export const getGroupById = async (req, res) => {
   try {
     const { groupId } = req.params;
     const group = await groupsService.getGroupById(groupId);
@@ -29,11 +28,10 @@ export const getGroupById = async (req, res, next) => {
     }
   } catch (err) {
     controllerLogger(CONTROLLER_NAME, 'getGroupById', req, err);
-    return next(err);
   }
 };
 
-export const createGroup = async (req, res, next) => {
+export const createGroup = async (req, res) => {
   try {
     const newGroup = {
       ...req.body,
@@ -44,11 +42,10 @@ export const createGroup = async (req, res, next) => {
     res.status(200).json(group);
   } catch (err) {
     controllerLogger(CONTROLLER_NAME, 'createGroup', req, err);
-    return next(err);
   }
 };
 
-export const updateGroupById = async (req, res, next) => {
+export const updateGroupById = async (req, res) => {
   try {
     const { groupId } = req.params;
     let group = await groupsService.getGroupById(groupId);
@@ -67,11 +64,10 @@ export const updateGroupById = async (req, res, next) => {
     }
   } catch (err) {
     controllerLogger(CONTROLLER_NAME, 'updateGroupById', req, err);
-    return next(err);
   }
 };
 
-export const deleteGroupById = async (req, res, next) => {
+export const deleteGroupById = async (req, res) => {
   try {
     const { groupId } = req.params;
     const group = await groupsService.getGroupById(groupId);
@@ -85,11 +81,10 @@ export const deleteGroupById = async (req, res, next) => {
     }
   } catch (err) {
     controllerLogger(CONTROLLER_NAME, 'deleteGroupById', req, err);
-    return next(err);
   }
 };
 
-export const addUsersToGroup = async (req, res, next) => {
+export const addUsersToGroup = async (req, res) => {
   try {
     const { groupId } = req.params;
     const { usersIds } = req.body;
@@ -105,6 +100,5 @@ export const addUsersToGroup = async (req, res, next) => {
       });
   } catch (err) {
     controllerLogger(CONTROLLER_NAME, 'addUsersToGroup', req, err);
-    return next(err);
   }
 };
