@@ -1,7 +1,7 @@
 import express from 'express';
 import { usersRouter, groupsRouter } from './routes';
 import { sequelize } from '../data-access';
-import { requestLogger } from './middlewares';
+import { requestLogger, unhandledErrorLogger } from './middlewares';
 
 const { stdout } = process;
 
@@ -10,8 +10,11 @@ const port = 8080;
 
 app.use(express.json());
 app.use(requestLogger);
+
 app.use('/users', usersRouter);
 app.use('/groups', groupsRouter);
+
+app.use(unhandledErrorLogger);
 
 app.listen(port, () => {
   stdout.write(`Server is running on port ${port}\n`);
