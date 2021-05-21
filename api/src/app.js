@@ -20,9 +20,10 @@ app.use('/groups', groupsRouter);
 
 app.use(unhandledErrorLogger);
 
+uncaughtExceptionHandler();
+unhandledPromiseRejectionHandler();
+
 app.listen(port, () => {
-  uncaughtExceptionHandler();
-  unhandledPromiseRejectionHandler();
   stdout.write(`Server is running on port ${port}\n`);
 });
 

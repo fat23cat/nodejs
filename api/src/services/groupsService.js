@@ -45,12 +45,6 @@ class GroupsService {
           { transaction }
         );
       }
-      // return usersIds.map(async (user_id) => {
-      //   return await UserGroup.create(
-      //     { id: uuidv4(), user_id, group_id },
-      //     { transaction }
-      //   );
-      // });
     });
   }
 }
