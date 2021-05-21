@@ -5,7 +5,7 @@ import { controllerLogger } from '../helpers';
 
 const CONTROLLER_NAME = 'UsersController';
 
-export const getAllUsers = async (req, res) => {
+export const getAllUsers = async (req, res, next) => {
   try {
     const { query, limit } = req.query;
     let result;
@@ -22,10 +22,11 @@ export const getAllUsers = async (req, res) => {
     });
   } catch (err) {
     controllerLogger(CONTROLLER_NAME, 'getAllUsers', req, err);
+    return next(err);
   }
 };
 
-export const getUserById = async (req, res) => {
+export const getUserById = async (req, res, next) => {
   try {
     const { userId } = req.params;
     const user = await usersService.getUserById(userId);
@@ -38,10 +39,11 @@ export const getUserById = async (req, res) => {
     }
   } catch (err) {
     controllerLogger(CONTROLLER_NAME, 'getUserById', req, err);
+    return next(err);
   }
 };
 
-export const createUser = async (req, res) => {
+export const createUser = async (req, res, next) => {
   try {
     const newUser = {
       ...req.body,
@@ -52,9 +54,10 @@ export const createUser = async (req, res) => {
     res.status(200).json(user);
   } catch (err) {
     controllerLogger(CONTROLLER_NAME, 'createUser', req, err);
+    return next(err);
   }
 };
-export const updateUserById = async (req, res) => {
+export const updateUserById = async (req, res, next) => {
   try {
     const { userId } = req.params;
     let user = await usersService.getUserById(userId);
@@ -75,10 +78,11 @@ export const updateUserById = async (req, res) => {
     }
   } catch (err) {
     controllerLogger(CONTROLLER_NAME, 'updateUserById', req, err);
+    return next(err);
   }
 };
 
-export const deleteUserById = async (req, res) => {
+export const deleteUserById = async (req, res, next) => {
   try {
     const { userId } = req.params;
     const user = await usersService.getUserById(userId);
@@ -92,5 +96,6 @@ export const deleteUserById = async (req, res) => {
     }
   } catch (err) {
     controllerLogger(CONTROLLER_NAME, 'deleteUserById', req, err);
+    return next(err);
   }
 };
