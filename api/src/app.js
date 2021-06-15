@@ -6,11 +6,14 @@ import {
   uncaughtExceptionHandler,
   unhandledPromiseRejectionHandler
 } from './helpers';
+import cors from 'cors';
 
 const { stdout } = process;
 
 const app = express();
 const port = 8080;
+
+app.use(cors());
 
 app.use(express.json());
 app.use(requestLogger);
