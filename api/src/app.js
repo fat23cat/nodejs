@@ -1,25 +1,29 @@
 import express from 'express';
-import { usersRouter, groupsRouter } from './routes';
+import { usersRouter, groupsRouter, loginRouter } from './routes';
 import { sequelize } from '../data-access';
-import { requestLogger, unhandledErrorLogger } from './middlewares';
+import { requestLogger, unhandledErrorLogger, authGuard } from './middlewares';
 import {
   uncaughtExceptionHandler,
   unhandledPromiseRejectionHandler
 } from './helpers';
 import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const { stdout } = process;
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 app.use(cors());
 
 app.use(express.json());
 app.use(requestLogger);
 
-app.use('/users', usersRouter);
-app.use('/groups', groupsRouter);
+app.use('/login', loginRouter);
+app.use('/users', authGuard, usersRouter);
+app.use('/groups', authGuard, groupsRouter);
 
 app.use(unhandledErrorLogger);
 

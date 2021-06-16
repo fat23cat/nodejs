@@ -3,3 +3,4 @@ export * from './logger';
 export * from './uncaughtExceptionHandler';
 export * from './unhandledPromiseRejectionHandler';
 export * from './controllerLogger';
+export * from './generateAccessToken';

@@ -29,3 +29,8 @@ export const groupSchema = Joi.object({
 export const usersIdsSchema = Joi.object({
   usersIds
 }).options({ abortEarly: false });
+
+export const loginSchema = Joi.object({
+  login,
+  password
+}).options({ abortEarly: false });

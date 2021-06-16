@@ -9,7 +9,7 @@ export const requestLogger = (req, res, next) => {
   const queryParams = stringifyParams(query);
   const bodyParams = stringifyParams(body);
   stdout.write(
-    `${YELLOW}[LOG] Request ${method} ${path}${
+    `${YELLOW}[LOG] [${new Date().toISOString()}] Request ${method} ${path}${
       queryParams ? `; query params: ${queryParams}` : ``
     }${bodyParams ? `; body params: ${bodyParams}` : ``}${CLOSE_COLOR}\n`
   );

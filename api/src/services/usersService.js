@@ -21,6 +21,16 @@ class UsersService {
     });
   }
 
+  async getUserByLogin(login) {
+    const user = await User.findOne({
+      where: { login, isDeleted: false },
+      attributes: {
+        include: ['password']
+      }
+    });
+    return user;
+  }
+
   async getUserById(id) {
     return await User.findOne({
       where: {

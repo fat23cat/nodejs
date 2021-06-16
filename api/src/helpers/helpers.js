@@ -5,7 +5,7 @@ export const createValidationErrorMessage = (errors) => {
 export const stringifyParams = (params) => {
   return Object.keys(params)
     .map((key) => {
-      return `${key}=${params[key]}`;
+      return key === 'password' ? `${key}=*hidden*` : `${key}=${params[key]}`;
     })
     .join(', ');
 };
