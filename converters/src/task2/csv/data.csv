@@ -1,6 +1,6 @@
-Identifier,First name,Last name
-901242,Rachel,Booker
-207074,Laura,Grey
-408129,Craig,Johnson
-934600,Mary,Jenkins
-507916,Jamie,Smith
+Book,Author,Amount,Price
+The Compound Effect,Darren Hardy,5,9.48
+The 7 Habits of Highly Effective People,Stephen R. Covey,4,23.48
+The Miracle Morning,Hal Elrod,10,21.34
+Influence: The Psychology of Persuasion,Robert B. Cialdini,4,12.99
+The ONE Thing,Gary Keller,1,11.18

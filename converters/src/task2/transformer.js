@@ -12,7 +12,15 @@ export function transform() {
   const writeStream = fs.createWriteStream(outputFilePath);
 
   readStream
-    .pipe(csv())
+    .pipe(
+      csv({
+        headers: ["book", "author", "amount", "price"],
+        colParser: {
+          amount: "number",
+          price: "number",
+        },
+      })
+    )
     .on("error", (err) => {
       stdout.write(err);
     })
