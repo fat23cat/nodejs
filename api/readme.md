@@ -12,7 +12,7 @@ SECRET_KEY=
 PORT=
 ```
 
-where you need to specify your database name, database user, password, token secret key, and the server port.
+where you need to specify your database name, database user, password, token secret key, and the node app port.
 
 ## API documentation
 
