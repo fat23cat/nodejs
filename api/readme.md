@@ -8,8 +8,9 @@ Create `.env` file in the `src` directory with the following structure:
 DB_NAME=
 DB_USER=
 DB_PASSWORD=
+DB_URL=localhost
 SECRET_KEY=
-PORT=
+PORT=8080
 ```
 
 where you need to specify your database name, database user, password, token secret key, and the node app port.
