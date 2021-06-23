@@ -21,9 +21,8 @@ import {
 describe('GroupsController', () => {
   afterEach(jest.clearAllMocks);
   describe('getAllGroups', () => {
-    const getAllGroupsSpy = jest.spyOn(groupsService, 'getAllGroups');
-
     test('should return 200 getAllGroups response', async () => {
+      const getAllGroupsSpy = jest.spyOn(groupsService, 'getAllGroups');
       getAllGroupsSpy.mockResolvedValueOnce(groups);
 
       await getAllGroups(mockReq, mockRes, mockNext);
@@ -140,7 +139,7 @@ describe('GroupsController', () => {
       deleteGroupByIdSpy.mockResolvedValueOnce(Promise.resolve());
       getGroupByIdSpy.mockResolvedValueOnce(group);
 
-      await deleteGroupById(mockReq, mockRes, mockNext);
+      await deleteGroupById(req, mockRes, mockNext);
 
       expect(getGroupByIdSpy).toBeCalled();
       expect(deleteGroupByIdSpy).toBeCalled();

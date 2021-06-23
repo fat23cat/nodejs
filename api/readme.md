@@ -32,3 +32,7 @@ Run `npm ci`
 ## Run server app
 
 `npm run server`
+
+## Run tests
+
+`npm run test`

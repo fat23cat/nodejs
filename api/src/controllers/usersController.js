@@ -69,7 +69,7 @@ export const updateUserById = async (req, res, next) => {
         age: req.body.age,
         isDeleted: false
       };
-      await usersService.updateUser(user, userId);
+      await usersService.updateUserById(user, userId);
       res.sendStatus(200);
     } else {
       res.status(404).json({
@@ -87,7 +87,7 @@ export const deleteUserById = async (req, res, next) => {
     const { userId } = req.params;
     const user = await usersService.getUserById(userId);
     if (user) {
-      await usersService.deleteUser(userId);
+      await usersService.deleteUserById(userId);
       res.sendStatus(200);
     } else {
       res.status(404).json({

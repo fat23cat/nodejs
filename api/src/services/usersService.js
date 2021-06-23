@@ -44,7 +44,7 @@ class UsersService {
     return await User.create(user);
   }
 
-  async updateUser(user, id) {
+  async updateUserById(user, id) {
     return await User.update(user, {
       where: {
         id
@@ -52,7 +52,7 @@ class UsersService {
     });
   }
 
-  async deleteUser(id) {
+  async deleteUserById(id) {
     return await User.destroy({
       where: {
         id
