@@ -21,7 +21,7 @@ class GroupsService {
     return await Group.create(group);
   }
 
-  async updateGroup(group, id) {
+  async updateGroupById(group, id) {
     return await Group.update(group, {
       where: {
         id
@@ -29,7 +29,7 @@ class GroupsService {
     });
   }
 
-  async deleteGroup(id) {
+  async deleteGroupById(id) {
     return await Group.destroy({
       where: {
         id

@@ -58,7 +58,7 @@ export const updateGroupById = async (req, res, next) => {
         name: req.body.name,
         permissions: req.body.permissions
       };
-      await groupsService.updateGroup(group, groupId);
+      await groupsService.updateGroupById(group, groupId);
       res.sendStatus(200);
     } else {
       res.status(404).json({
@@ -76,7 +76,7 @@ export const deleteGroupById = async (req, res, next) => {
     const { groupId } = req.params;
     const group = await groupsService.getGroupById(groupId);
     if (group) {
-      await groupsService.deleteGroup(groupId);
+      await groupsService.deleteGroupById(groupId);
       res.sendStatus(200);
     } else {
       res.status(404).json({
