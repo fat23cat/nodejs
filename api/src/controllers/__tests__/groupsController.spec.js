@@ -21,7 +21,7 @@ import {
 describe('GroupsController', () => {
   afterEach(jest.clearAllMocks);
   describe('getAllGroups', () => {
-    test('should return 200 getAllGroups response', async () => {
+    it('should return 200 getAllGroups response', async () => {
       const getAllGroupsSpy = jest.spyOn(groupsService, 'getAllGroups');
       getAllGroupsSpy.mockResolvedValueOnce(groups);
 
@@ -36,7 +36,7 @@ describe('GroupsController', () => {
   describe('getGroupById', () => {
     const getGroupByIdSpy = jest.spyOn(groupsService, 'getGroupById');
 
-    test('should return 200 getGroupById response', async () => {
+    it('should return 200 getGroupById response', async () => {
       const req = {
         ...mockReq
       };
@@ -50,7 +50,7 @@ describe('GroupsController', () => {
       expect(mockRes.json).toHaveBeenCalledWith(group);
     });
 
-    test('should return 404 getGroupById response', async () => {
+    it('should return 404 getGroupById response', async () => {
       const req = {
         ...mockReq
       };
@@ -78,7 +78,7 @@ describe('GroupsController', () => {
         v4: jest.fn(() => '1')
       };
     });
-    test('should return 200 createGroup response', async () => {
+    it('should return 200 createGroup response', async () => {
       createGroupSpy.mockResolvedValueOnce(group);
       getGroupByIdSpy.mockResolvedValueOnce(group);
 
@@ -95,7 +95,7 @@ describe('GroupsController', () => {
     const getGroupByIdSpy = jest.spyOn(groupsService, 'getGroupById');
     const updateGroupByIdSpy = jest.spyOn(groupsService, 'updateGroupById');
 
-    test('should return 200 updateGroupById response', async () => {
+    it('should return 200 updateGroupById response', async () => {
       const req = {
         ...mockReq
       };
@@ -111,7 +111,7 @@ describe('GroupsController', () => {
       expect(mockRes.sendStatus).toHaveBeenCalledWith(200);
     });
 
-    test('should return 404 updateGroupById response', async () => {
+    it('should return 404 updateGroupById response', async () => {
       const req = {
         ...mockReq
       };
@@ -131,7 +131,7 @@ describe('GroupsController', () => {
     const deleteGroupByIdSpy = jest.spyOn(groupsService, 'deleteGroupById');
     const getGroupByIdSpy = jest.spyOn(groupsService, 'getGroupById');
 
-    test('should return 200 deleteGroupById response', async () => {
+    it('should return 200 deleteGroupById response', async () => {
       const req = {
         ...mockReq
       };
@@ -146,7 +146,7 @@ describe('GroupsController', () => {
       expect(mockRes.sendStatus).toHaveBeenCalledWith(200);
     });
 
-    test('should return 404 deleteGroupById response', async () => {
+    it('should return 404 deleteGroupById response', async () => {
       getGroupByIdSpy.mockResolvedValueOnce(null);
 
       await deleteGroupById(mockReq, mockRes, mockNext);
@@ -161,7 +161,7 @@ describe('GroupsController', () => {
   describe('addUsersToGroup', () => {
     const addUsersToGroupSpy = jest.spyOn(groupsService, 'addUsersToGroup');
 
-    test('should return 200 addUsersToGroup response', async () => {
+    it('should return 200 addUsersToGroup response', async () => {
       addUsersToGroupSpy.mockResolvedValueOnce(Promise.resolve());
 
       await addUsersToGroup(mockReq, mockRes, mockNext);
@@ -170,7 +170,7 @@ describe('GroupsController', () => {
       expect(mockRes.sendStatus).toHaveBeenCalledWith(200);
     });
 
-    test('should return 500 addUsersToGroup response', async () => {
+    it('should return 500 addUsersToGroup response', async () => {
       addUsersToGroupSpy.mockResolvedValueOnce(Promise.reject());
 
       await addUsersToGroup(mockReq, mockRes, mockNext);

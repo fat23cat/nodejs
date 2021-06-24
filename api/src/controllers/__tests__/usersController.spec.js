@@ -25,7 +25,7 @@ describe('UsersController', () => {
       'getAllUsersSuggestions'
     );
 
-    test('should return 200 getAllUsers response and all users', async () => {
+    it('should return 200 getAllUsers response and all users', async () => {
       getAllUsersSpy.mockResolvedValueOnce([user]);
 
       await getAllUsers(mockReq, mockRes, mockNext);
@@ -36,7 +36,7 @@ describe('UsersController', () => {
       expect(mockRes.json).toHaveBeenCalledWith(users);
     });
 
-    test('should return 200 getAllUsers response and all suggested users', async () => {
+    it('should return 200 getAllUsers response and all suggested users', async () => {
       const req = {
         ...mockReq
       };
@@ -56,7 +56,7 @@ describe('UsersController', () => {
   describe('getUserById', () => {
     const getUserByIdSpy = jest.spyOn(usersService, 'getUserById');
 
-    test('should return 200 getUserById response', async () => {
+    it('should return 200 getUserById response', async () => {
       const req = {
         ...mockReq
       };
@@ -70,7 +70,7 @@ describe('UsersController', () => {
       expect(mockRes.json).toHaveBeenCalledWith(user);
     });
 
-    test('should return 404 getUserById response', async () => {
+    it('should return 404 getUserById response', async () => {
       getUserByIdSpy.mockResolvedValueOnce(null);
 
       await getUserById(mockReq, mockRes, mockNext);
@@ -89,7 +89,7 @@ describe('UsersController', () => {
         v4: jest.fn(() => '1')
       };
     });
-    test('should return 200 createUser response', async () => {
+    it('should return 200 createUser response', async () => {
       createUserSpy.mockResolvedValueOnce(user);
       getUserByIdSpy.mockResolvedValueOnce(user);
 
@@ -106,7 +106,7 @@ describe('UsersController', () => {
     const getUserByIdSpy = jest.spyOn(usersService, 'getUserById');
     const updateUserByIdSpy = jest.spyOn(usersService, 'updateUserById');
 
-    test('should return 200 updateUserById response', async () => {
+    it('should return 200 updateUserById response', async () => {
       const req = {
         ...mockReq
       };
@@ -123,7 +123,7 @@ describe('UsersController', () => {
       expect(mockRes.sendStatus).toHaveBeenCalledWith(200);
     });
 
-    test('should return 404 updateUserById response', async () => {
+    it('should return 404 updateUserById response', async () => {
       const req = {
         ...mockReq
       };
@@ -143,7 +143,7 @@ describe('UsersController', () => {
     const deleteUserByIdSpy = jest.spyOn(usersService, 'deleteUserById');
     const getUserByIdSpy = jest.spyOn(usersService, 'getUserById');
 
-    test('should return 200 deleteUserById response', async () => {
+    it('should return 200 deleteUserById response', async () => {
       const req = {
         ...mockReq
       };
@@ -158,7 +158,7 @@ describe('UsersController', () => {
       expect(mockRes.sendStatus).toHaveBeenCalledWith(200);
     });
 
-    test('should return 404 deleteUserById response', async () => {
+    it('should return 404 deleteUserById response', async () => {
       getUserByIdSpy.mockResolvedValueOnce(null);
 
       await deleteUserById(mockReq, mockRes, mockNext);
